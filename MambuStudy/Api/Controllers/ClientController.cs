@@ -19,15 +19,21 @@ namespace MambuStudy.Api.Controllers
         {
             var result = await _clientService.Get(limit, offset);
 
-            return Ok(result);
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
         }
 
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] CreateClientRequest clientRequest)
         {
             var result = await _clientService.Create(clientRequest);
+           
+            if(result.IsSuccess)
+                return CreatedAtAction(nameof(GetById), new { clientId = result.Data.Id }, result);
 
-            return Ok(result);
+            return BadRequest(result);
         }
 
         [HttpGet("{clientId}")]
@@ -35,7 +41,10 @@ namespace MambuStudy.Api.Controllers
         {
             var result = await _clientService.GetById(clientId);
 
-            return Ok(result);
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return NotFound(result);
         }
 
         [HttpDelete("{clientId}")]
@@ -43,7 +52,10 @@ namespace MambuStudy.Api.Controllers
         {
             var result = await _clientService.Delete(clientId);
 
-            return Ok(result);
+            if (result.IsSuccess)
+                return NoContent();
+
+            return NotFound(result);
         }
     }
 }

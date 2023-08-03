@@ -1,4 +1,5 @@
-﻿using MambuStudy.Domain.Models;
+﻿using MambuStudy.Application.ViewModel.Response;
+using MambuStudy.Domain.Models;
 using Newtonsoft.Json;
 using System.Net;
 
@@ -11,21 +12,19 @@ namespace MambuStudy.Application.Extensions
             using var body = message.Content.ReadAsStream();
             using var sr = new StreamReader(body);
             var content = sr.ReadToEnd();
-            
-            if (message.StatusCode == HttpStatusCode.OK)
+
+            if (message.IsSuccessStatusCode)
             {
                 var data = JsonConvert.DeserializeObject<T>(content);
-                return new ApiResult<T>(data, HttpStatusCode.OK);
-            }
-            
-            if (message.StatusCode == HttpStatusCode.Created)
-            {
-                var data = JsonConvert.DeserializeObject<T>(content);
-                return new ApiResult<T>(data, HttpStatusCode.Created);
+                return new ApiResult<T>(data, message.StatusCode);
             }
 
-            message.EnsureSuccessStatusCode();
-            
+            if (!message.IsSuccessStatusCode)
+            {
+                var errors = JsonConvert.DeserializeObject<ErrorResponse>(content);
+                return new ApiResult<T>(default(T), message.StatusCode, errors);
+            }
+
             return null;
         }
     }

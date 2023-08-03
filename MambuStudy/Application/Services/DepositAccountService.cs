@@ -7,11 +7,11 @@ using Microsoft.Net.Http.Headers;
 
 namespace MambuStudy.Application.Services
 {
-    public class ClientService : IClientService
+    public class DepositAccountService : IDepositAccountService
     {
         private HttpClient _httpClient;
         private readonly IConfiguration _configuration;
-        public ClientService(IConfiguration configuration)
+        public DepositAccountService(IConfiguration configuration)
         {
             _configuration = configuration;
 
@@ -22,36 +22,36 @@ namespace MambuStudy.Application.Services
             _httpClient.DefaultRequestHeaders.Add(HeaderNames.UserAgent, "HttpRequestsSample");
         }
 
-        public async Task<ApiResult<List<ClientResponse>>> Get(int? limit, int? offset) 
+        public async Task<ApiResult<List<DepositAccountResponse>>> Get(int? limit, int? offset)
         {
-            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync($"clients?limit={limit}&offset={offset}");
+            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync($"deposits?limit={limit}&offset={offset}");
 
-            var result = httpResponseMessage.GetApiResult<List<ClientResponse>>();
+            var result = httpResponseMessage.GetApiResult<List<DepositAccountResponse>>();
 
             return result;
         }
 
-        public async Task<ApiResult<ClientResponse>> Create(CreateClientRequest clientRequest)
+        public async Task<ApiResult<DepositAccountResponse>> Create(CreateDepositAccountRequest depositAccountRequest)
         {
-            HttpResponseMessage httpResponseMessage = await _httpClient.PostAsJsonAsync("clients", clientRequest);
+            HttpResponseMessage httpResponseMessage = await _httpClient.PostAsJsonAsync("deposits", depositAccountRequest);
 
-            var result = httpResponseMessage.GetApiResult<ClientResponse>();
+            var result = httpResponseMessage.GetApiResult<DepositAccountResponse>();
 
             return result;
         }
 
-        public async Task<ApiResult<ClientResponse>> GetById(string clientId)
+        public async Task<ApiResult<DepositAccountResponse>> GetById(string depositAccountId)
         {
-            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync($"clients/{clientId}");
+            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync($"deposits/{depositAccountId}");
 
-            var result = httpResponseMessage.GetApiResult<ClientResponse>();
+            var result = httpResponseMessage.GetApiResult<DepositAccountResponse>();
 
             return result;
         }
 
-        public async Task<ApiResult<object>> Delete(string clientId)
+        public async Task<ApiResult<object>> Delete(string depositAccountId)
         {
-            HttpResponseMessage httpResponseMessage = await _httpClient.DeleteAsync($"clients/{clientId}");
+            HttpResponseMessage httpResponseMessage = await _httpClient.DeleteAsync($"deposits/{depositAccountId}");
 
             var result = httpResponseMessage.GetApiResult<object>();
 
