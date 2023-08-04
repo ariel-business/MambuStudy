@@ -3,28 +3,23 @@ using MambuStudy.Application.Interfaces;
 using MambuStudy.Application.ViewModel.Request;
 using MambuStudy.Application.ViewModel.Response;
 using MambuStudy.Domain.Models;
-using Microsoft.Net.Http.Headers;
 
 namespace MambuStudy.Application.Services
 {
     public class ClientService : IClientService
     {
-        private HttpClient _httpClient;
-        private readonly IConfiguration _configuration;
-        public ClientService(IConfiguration configuration)
+        private readonly IHttpClientFactory _httpClientFactory;
+    
+        public ClientService(IHttpClientFactory httpClientFactory)
         {
-            _configuration = configuration;
-
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(_configuration.GetSection("MambuApiConfiguration:BaseUrl").Value);
-            _httpClient.DefaultRequestHeaders.Add("apiKey", _configuration.GetSection("MambuApiConfiguration:ApiKey").Value);
-            _httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, $"application/vnd.mambu.{_configuration.GetSection("MambuApiConfiguration:Version").Value}+json");
-            _httpClient.DefaultRequestHeaders.Add(HeaderNames.UserAgent, "HttpRequestsSample");
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<ApiResult<List<ClientResponse>>> Get(int? limit, int? offset) 
         {
-            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync($"clients?limit={limit}&offset={offset}");
+            HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
+
+            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"clients?limit={limit}&offset={offset}");
 
             var result = httpResponseMessage.GetApiResult<List<ClientResponse>>();
 
@@ -33,7 +28,9 @@ namespace MambuStudy.Application.Services
 
         public async Task<ApiResult<ClientResponse>> Create(CreateClientRequest clientRequest)
         {
-            HttpResponseMessage httpResponseMessage = await _httpClient.PostAsJsonAsync("clients", clientRequest);
+            HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
+
+            HttpResponseMessage httpResponseMessage = await httpClient.PostAsJsonAsync("clients", clientRequest);
 
             var result = httpResponseMessage.GetApiResult<ClientResponse>();
 
@@ -42,7 +39,9 @@ namespace MambuStudy.Application.Services
 
         public async Task<ApiResult<ClientResponse>> GetById(string clientId)
         {
-            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync($"clients/{clientId}");
+            HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
+
+            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"clients/{clientId}");
 
             var result = httpResponseMessage.GetApiResult<ClientResponse>();
 
@@ -51,7 +50,9 @@ namespace MambuStudy.Application.Services
 
         public async Task<ApiResult<object>> Delete(string clientId)
         {
-            HttpResponseMessage httpResponseMessage = await _httpClient.DeleteAsync($"clients/{clientId}");
+            HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
+
+            HttpResponseMessage httpResponseMessage = await httpClient.DeleteAsync($"clients/{clientId}");
 
             var result = httpResponseMessage.GetApiResult<object>();
 

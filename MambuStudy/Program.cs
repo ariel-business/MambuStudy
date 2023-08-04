@@ -1,5 +1,6 @@
 using MambuStudy.Application.Interfaces;
 using MambuStudy.Application.Services;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IDepositProductService, DepositProductService>();
 builder.Services.AddScoped<IDepositAccountService, DepositAccountService>();
+
+// Add HttpClient configuration
+builder.Services.AddHttpClient(
+    "mambuApi",
+    configureClient =>
+    {
+        configureClient.BaseAddress = new Uri(builder.Configuration.GetSection("MambuApiConfiguration:BaseUrl").Value);
+        configureClient.DefaultRequestHeaders.Add("apiKey", builder.Configuration.GetSection("MambuApiConfiguration:ApiKey").Value);
+        configureClient.DefaultRequestHeaders.Add(HeaderNames.Accept, $"application/vnd.mambu.{builder.Configuration.GetSection("MambuApiConfiguration:Version").Value}+json");
+        configureClient.DefaultRequestHeaders.Add(HeaderNames.UserAgent, "HttpRequestsSample");
+    });
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
