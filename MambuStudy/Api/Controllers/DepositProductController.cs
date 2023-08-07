@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MambuStudy.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/depositproducts")]
     [ApiController]
     public class DepositProductController : ControllerBase
     {
@@ -15,14 +15,25 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get([FromQuery] int? limit, [FromQuery] int? offset, [FromQuery] string? detailsLevel = "FULL")
+        public async Task<ActionResult> GetAll([FromQuery] int? limit, [FromQuery] int? offset, [FromQuery] string? detailsLevel = "FULL")
         {
-            var result = await _depositProductService.Get(limit, offset, detailsLevel);
+            var result = await _depositProductService.GetAll(limit, offset, detailsLevel);
 
             if (result.IsSuccess)
                 return Ok(result);
 
             return BadRequest(result);
-        } 
+        }
+
+        [HttpGet("{depositProductId}")]
+        public async Task<ActionResult> GetById([FromRoute] string depositProductId, [FromQuery] string? detailsLevel = "FULL")
+        {
+            var result = await _depositProductService.GetById(depositProductId, detailsLevel);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return NotFound(result);
+        }
     }
 }

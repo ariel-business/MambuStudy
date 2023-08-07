@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MambuStudy.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/clients")]
     [ApiController]
     public class ClientController : ControllerBase
     {
@@ -15,9 +15,9 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get([FromQuery] int? limit, [FromQuery] int? offset)
+        public async Task<ActionResult> GetAll([FromQuery] int? limit, [FromQuery] int? offset)
         {
-            var result = await _clientService.Get(limit, offset);
+            var result = await _clientService.GetAll(limit, offset);
 
             if (result.IsSuccess)
                 return Ok(result);

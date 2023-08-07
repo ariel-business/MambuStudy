@@ -14,13 +14,24 @@ namespace MambuStudy.Application.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<ApiResult<List<DepositProductResponse>>> Get(int? limit, int? offset, string? detailsLevel = "FULL")
+        public async Task<ApiResult<List<DepositProductResponse>>> GetAll(int? limit, int? offset, string? detailsLevel = "FULL")
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 
             HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"depositproducts?limit={limit}&offset={offset}&detailsLevel={detailsLevel}");
 
             var result = httpResponseMessage.GetApiResult<List<DepositProductResponse>>();
+
+            return result;
+        }
+
+        public async Task<ApiResult<DepositProductResponse>> GetById(string depositProducttId, string? detailsLevel = "Full")
+        {
+            HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
+
+            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"depositproducts/{depositProducttId}?detailsLevel={detailsLevel}");
+
+            var result = httpResponseMessage.GetApiResult<DepositProductResponse>();
 
             return result;
         }

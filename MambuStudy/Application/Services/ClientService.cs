@@ -15,7 +15,7 @@ namespace MambuStudy.Application.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<ApiResult<List<ClientResponse>>> Get(int? limit, int? offset) 
+        public async Task<ApiResult<List<ClientResponse>>> GetAll(int? limit, int? offset) 
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 

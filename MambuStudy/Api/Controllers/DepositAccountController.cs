@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MambuStudy.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/deposits")]
     [ApiController]
     public class DepositAccountController : ControllerBase
     {
@@ -16,9 +16,9 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get([FromQuery] int? limit, [FromQuery] int? offset)
+        public async Task<ActionResult> GetAll([FromQuery] int? limit, [FromQuery] int? offset)
         {
-            var result = await _depositAccountService.Get(limit, offset);
+            var result = await _depositAccountService.GetAll(limit, offset);
 
             if (result.IsSuccess)
                 return Ok(result);
@@ -33,6 +33,17 @@ namespace MambuStudy.Api.Controllers
 
             if (result.IsSuccess)
                 return CreatedAtAction(nameof(GetById), new { depositAccountId = result.Data.Id }, result);
+
+            return BadRequest(result);
+        }
+
+        [HttpPost("{depositAccountId}:changeState")]
+        public async Task<ActionResult> ChangeDepositAccountState([FromRoute] string depositAccountId, [FromBody] ChangeDepositAccountStateRequest changeDepositAccountStateRequest)
+        {
+            var result = await _depositAccountService.ChangeDepositAccountState(depositAccountId, changeDepositAccountStateRequest);
+
+            if (result.IsSuccess)
+                return Ok(result);
 
             return BadRequest(result);
         }
@@ -57,6 +68,28 @@ namespace MambuStudy.Api.Controllers
                 return NoContent();
 
             return NotFound(result);
+        }
+
+        [HttpGet("{depositAccountId}/transactions")]
+        public async Task<ActionResult> GetAllTransactions([FromRoute] string depositAccountId, [FromQuery] int? limit, [FromQuery] int? offset)
+        {
+            var result = await _depositAccountService.GetAllTransactions(depositAccountId, limit, offset);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+        [HttpPost("{depositAccountId}/deposit-transactions")]
+        public async Task<ActionResult> MakeDeposit([FromRoute] string depositAccountId, [FromBody] MakeDepositTransactionRequest makeDepositTransactionRequest)
+        {
+            var result = await _depositAccountService.MakeDeposit(depositAccountId, makeDepositTransactionRequest);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
         }
     }
 }
