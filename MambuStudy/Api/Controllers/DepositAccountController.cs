@@ -16,9 +16,9 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll([FromQuery] int? limit, [FromQuery] int? offset)
+        public async Task<ActionResult> GetAll([FromQuery] int? limit, [FromQuery] int? offset, [FromQuery] string? detailsLevel = "BASIC")
         {
-            var result = await _depositAccountService.GetAll(limit, offset);
+            var result = await _depositAccountService.GetAll(limit, offset, detailsLevel);
 
             if (result.IsSuccess)
                 return Ok(result);
@@ -49,9 +49,9 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet("{depositAccountId}")]
-        public async Task<ActionResult> GetById([FromRoute] string depositAccountId)
+        public async Task<ActionResult> GetById([FromRoute] string depositAccountId, [FromQuery] string? detailsLevel = "BASIC")
         {
-            var result = await _depositAccountService.GetById(depositAccountId);
+            var result = await _depositAccountService.GetById(depositAccountId, detailsLevel);
 
             if (result.IsSuccess)
                 return Ok(result);
@@ -71,9 +71,9 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet("{depositAccountId}/transactions")]
-        public async Task<ActionResult> GetAllTransactions([FromRoute] string depositAccountId, [FromQuery] int? limit, [FromQuery] int? offset)
+        public async Task<ActionResult> GetAllTransactions([FromRoute] string depositAccountId, [FromQuery] int? limit, [FromQuery] int? offset, [FromQuery] string? detailsLevel = "BASIC")
         {
-            var result = await _depositAccountService.GetAllTransactions(depositAccountId, limit, offset);
+            var result = await _depositAccountService.GetAllTransactions(depositAccountId, limit, offset, detailsLevel);
 
             if (result.IsSuccess)
                 return Ok(result);

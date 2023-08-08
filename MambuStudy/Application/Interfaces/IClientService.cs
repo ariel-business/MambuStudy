@@ -6,9 +6,9 @@ namespace MambuStudy.Application.Interfaces
 {
     public interface IClientService
     {
-        Task<ApiResult<List<ClientResponse>>> GetAll(int? limit, int? offset);
+        Task<ApiResult<List<ClientResponse>>> GetAll(int? limit, int? offset, string? detailsLevel);
         Task<ApiResult<ClientResponse>> Create(CreateClientRequest clientRequest);
-        Task<ApiResult<ClientResponse>> GetById(string clientId);
+        Task<ApiResult<ClientResponse>> GetById(string clientId, string? detailsLevel);
         Task<ApiResult<object>> Delete(string clientId);
     }
 }

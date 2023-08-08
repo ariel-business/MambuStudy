@@ -15,9 +15,9 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll([FromQuery] int? limit, [FromQuery] int? offset)
+        public async Task<ActionResult> GetAll([FromQuery] int? limit, [FromQuery] int? offset, [FromQuery] string? detailsLevel = "BASIC")
         {
-            var result = await _clientService.GetAll(limit, offset);
+            var result = await _clientService.GetAll(limit, offset, detailsLevel);
 
             if (result.IsSuccess)
                 return Ok(result);
@@ -37,9 +37,9 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet("{clientId}")]
-        public async Task<ActionResult> GetById([FromRoute] string clientId)
+        public async Task<ActionResult> GetById([FromRoute] string clientId, [FromQuery] string? detailsLevel = "BASIC")
         {
-            var result = await _clientService.GetById(clientId);
+            var result = await _clientService.GetById(clientId, detailsLevel);
 
             if (result.IsSuccess)
                 return Ok(result);

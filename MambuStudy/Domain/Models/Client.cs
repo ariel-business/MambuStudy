@@ -3,7 +3,7 @@
     public class Client
     {
         public string? Id { get; set; }
-        public IdentificationDocument? IdDocuments { get; set; }
+        public List<IdentificationDocument>? IdDocuments { get; set; }
         public string? EncodedKey { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -22,7 +22,7 @@
         public string? AssignedCentrehKey { get; set; }
         public string? AssignedUserKey { get; set; }
         public string? ClientRoleKey { get; set; }
-        public string? GroupKeys { get; set; }
+        public List<string>? GroupKeys { get; set; }
         public string? GroupLoanCycle { get; set; }
         public string? ClosedDate { get; set; }
         public string? CreationDate { get; set; }
@@ -33,6 +33,6 @@
         public string? PreferredLanguage { get; set; }
         public string? ProfilePictureKey { get; set; }
         public string? ProfileSignatureKey { get; set; }
-        public IList<Address>? Addresses { get; set; }
+        public List<Address>? Addresses { get; set; }
     }
 }

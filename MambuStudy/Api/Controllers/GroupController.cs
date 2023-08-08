@@ -15,9 +15,9 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll([FromQuery] int? limit, [FromQuery] int? offset)
+        public async Task<ActionResult> GetAll([FromQuery] int? limit, [FromQuery] int? offset, [FromQuery] string? detailsLevel = "BASIC")
         {
-            var result = await _groupService.GetAll(limit, offset);
+            var result = await _groupService.GetAll(limit, offset, detailsLevel);
 
             if (result.IsSuccess)
                 return Ok(result);
@@ -37,12 +37,23 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet("{groupId}")]
-        public async Task<ActionResult> GetById([FromRoute] string groupId, [FromQuery] string detailsLevel = "BASIC")
+        public async Task<ActionResult> GetById([FromRoute] string groupId, [FromQuery] string? detailsLevel = "BASIC")
         {
             var result = await _groupService.GetById(groupId, detailsLevel);
 
             if (result.IsSuccess)
                 return Ok(result);
+
+            return NotFound(result);
+        }
+
+        [HttpDelete("{groupId}")]
+        public async Task<ActionResult> Delete([FromRoute] string groupId)
+        {
+            var result = await _groupService.Delete(groupId);
+
+            if (result.IsSuccess)
+                return NoContent();
 
             return NotFound(result);
         }

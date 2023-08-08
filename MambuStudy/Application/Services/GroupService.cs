@@ -15,11 +15,11 @@ namespace MambuStudy.Application.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<ApiResult<List<GroupResponse>>> GetAll(int? limit, int? offset)
+        public async Task<ApiResult<List<GroupResponse>>> GetAll(int? limit, int? offset, string? detailsLevel)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"groups?limit={limit}&offset={offset}");
+            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"groups?limit={limit}&offset={offset}&detailsLevel={detailsLevel}");
 
             var result = httpResponseMessage.GetApiResult<List<GroupResponse>>();
 
@@ -37,13 +37,24 @@ namespace MambuStudy.Application.Services
             return result;
         }
 
-        public async Task<ApiResult<GroupResponse>> GetById(string groupId, string detailsLevel = "BASIC")
+        public async Task<ApiResult<GroupResponse>> GetById(string groupId, string? detailsLevel)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 
             HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"groups/{groupId}?detailsLevel={detailsLevel}");
 
             var result = httpResponseMessage.GetApiResult<GroupResponse>();
+
+            return result;
+        }
+
+        public async Task<ApiResult<object>> Delete(string groupId)
+        {
+            HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
+
+            HttpResponseMessage httpResponseMessage = await httpClient.DeleteAsync($"groups/{groupId}");
+
+            var result = httpResponseMessage.GetApiResult<object>();
 
             return result;
         }

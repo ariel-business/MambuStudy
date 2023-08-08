@@ -8,8 +8,8 @@
         public DepositNewAccountSettings NewAccountSettings { get; set; }
         public string State { get; set; }
         public string Type { get; set; }
+        public string Category { get; set; }
         public DepositProductAvailabilitySettings? AvailabilitySettings { get; set; }
-        public string? Category { get; set; }
         public string? CreationDate { get; set; }
         public CreditArrangementSettings? CreditArrangementSettings { get; set; }
         public DepositProductCurrencySettings? CurrencySettings { get; set; }

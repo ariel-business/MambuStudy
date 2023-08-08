@@ -15,9 +15,9 @@ public class DepositTransactionController : ControllerBase
     }
 
     [HttpGet("{depositTransactionId}")]
-    public async Task<ActionResult> GetById([FromRoute] string depositTransactionId)
+    public async Task<ActionResult> GetById([FromRoute] string depositTransactionId, [FromQuery] string? detailsLevel = "BASIC")
     {
-        var result = await _depositTransactionService.GetById(depositTransactionId);
+        var result = await _depositTransactionService.GetById(depositTransactionId, detailsLevel);
 
         if (result.IsSuccess)
             return Ok(result);

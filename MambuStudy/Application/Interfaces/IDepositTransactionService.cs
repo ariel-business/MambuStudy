@@ -6,6 +6,6 @@ namespace MambuStudy.Application.Interfaces
 {
     public interface IDepositTransactionService
     {
-        Task<ApiResult<DepositTransactionResponse>> GetById(string depositTransactionId);
+        Task<ApiResult<DepositTransactionResponse>> GetById(string depositTransactionId, string? detailsLevel);
     }
 }

@@ -15,11 +15,11 @@ namespace MambuStudy.Application.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<ApiResult<List<DepositAccountResponse>>> GetAll(int? limit, int? offset)
+        public async Task<ApiResult<List<DepositAccountResponse>>> GetAll(int? limit, int? offset, string? detailsLevel)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"deposits?limit={limit}&offset={offset}");
+            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"deposits?limit={limit}&offset={offset}&detailsLevel={detailsLevel}");
 
             var result = httpResponseMessage.GetApiResult<List<DepositAccountResponse>>();
 
@@ -37,11 +37,11 @@ namespace MambuStudy.Application.Services
             return result;
         }
 
-        public async Task<ApiResult<DepositAccountResponse>> GetById(string depositAccountId)
+        public async Task<ApiResult<DepositAccountResponse>> GetById(string depositAccountId, string? detailsLevel)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"deposits/{depositAccountId}");
+            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"deposits/{depositAccountId}?detailsLevel={detailsLevel}");
 
             var result = httpResponseMessage.GetApiResult<DepositAccountResponse>();
 
@@ -70,11 +70,11 @@ namespace MambuStudy.Application.Services
             return result;
         }
 
-        public async Task<ApiResult<List<DepositTransactionResponse>>> GetAllTransactions(string depositAccountId, int? limit, int? offset)
+        public async Task<ApiResult<List<DepositTransactionResponse>>> GetAllTransactions(string depositAccountId, int? limit, int? offset, string? detailsLevel)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"deposits/{depositAccountId}/transactions?limit={limit}&offset={offset}");
+            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"deposits/{depositAccountId}/transactions?limit={limit}&offset={offset}&detailsLevel={detailsLevel}");
 
             var result = httpResponseMessage.GetApiResult<List<DepositTransactionResponse>>();
 

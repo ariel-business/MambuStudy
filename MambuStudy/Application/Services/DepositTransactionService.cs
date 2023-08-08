@@ -14,11 +14,11 @@ namespace MambuStudy.Application.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<ApiResult<DepositTransactionResponse>> GetById(string depositTransactionId)
+        public async Task<ApiResult<DepositTransactionResponse>> GetById(string depositTransactionId, string? detailsLevel)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"deposits/transactions/{depositTransactionId}");
+            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"deposits/transactions/{depositTransactionId}?detailsLevel={detailsLevel}");
 
             var result = httpResponseMessage.GetApiResult<DepositTransactionResponse>();
 

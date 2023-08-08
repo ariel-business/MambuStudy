@@ -15,11 +15,11 @@ namespace MambuStudy.Application.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<ApiResult<List<ClientResponse>>> GetAll(int? limit, int? offset) 
+        public async Task<ApiResult<List<ClientResponse>>> GetAll(int? limit, int? offset, string? detailsLevel) 
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"clients?limit={limit}&offset={offset}");
+            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"clients?limit={limit}&offset={offset}&detailsLevel={detailsLevel}");
 
             var result = httpResponseMessage.GetApiResult<List<ClientResponse>>();
 
@@ -37,11 +37,11 @@ namespace MambuStudy.Application.Services
             return result;
         }
 
-        public async Task<ApiResult<ClientResponse>> GetById(string clientId)
+        public async Task<ApiResult<ClientResponse>> GetById(string clientId, string? detailsLevel)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"clients/{clientId}");
+            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"clients/{clientId}?detailsLevel={detailsLevel}");
 
             var result = httpResponseMessage.GetApiResult<ClientResponse>();
 
