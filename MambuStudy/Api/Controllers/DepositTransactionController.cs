@@ -1,4 +1,5 @@
 ﻿using MambuStudy.Application.Interfaces;
+using MambuStudy.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MambuStudy.Api.Controllers;
@@ -15,7 +16,7 @@ public class DepositTransactionController : ControllerBase
     }
 
     [HttpGet("{depositTransactionId}")]
-    public async Task<ActionResult> GetById([FromRoute] string depositTransactionId, [FromQuery] string? detailsLevel = "BASIC")
+    public async Task<ActionResult> GetById([FromRoute] string depositTransactionId, [FromQuery] DetailsLevel? detailsLevel = DetailsLevel.BASIC)
     {
         var result = await _depositTransactionService.GetById(depositTransactionId, detailsLevel);
 

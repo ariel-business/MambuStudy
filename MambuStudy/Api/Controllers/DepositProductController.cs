@@ -1,4 +1,5 @@
 ﻿using MambuStudy.Application.Interfaces;
+using MambuStudy.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MambuStudy.Api.Controllers
@@ -15,7 +16,7 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll([FromQuery] int? limit, [FromQuery] int? offset, [FromQuery] string? detailsLevel = "FULL")
+        public async Task<ActionResult> GetAll([FromQuery] int? limit, [FromQuery] int? offset, [FromQuery] DetailsLevel? detailsLevel = DetailsLevel.FULL)
         {
             var result = await _depositProductService.GetAll(limit, offset, detailsLevel);
 
@@ -26,7 +27,7 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet("{depositProductId}")]
-        public async Task<ActionResult> GetById([FromRoute] string depositProductId, [FromQuery] string? detailsLevel = "FULL")
+        public async Task<ActionResult> GetById([FromRoute] string depositProductId, [FromQuery] DetailsLevel? detailsLevel = DetailsLevel.FULL)
         {
             var result = await _depositProductService.GetById(depositProductId, detailsLevel);
 

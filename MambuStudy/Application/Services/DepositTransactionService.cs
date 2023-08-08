@@ -1,6 +1,7 @@
 ﻿using MambuStudy.Application.Extensions;
 using MambuStudy.Application.Interfaces;
 using MambuStudy.Application.ViewModel.Response;
+using MambuStudy.Domain.Enums;
 using MambuStudy.Domain.Models;
 
 namespace MambuStudy.Application.Services
@@ -14,7 +15,7 @@ namespace MambuStudy.Application.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<ApiResult<DepositTransactionResponse>> GetById(string depositTransactionId, string? detailsLevel)
+        public async Task<ApiResult<DepositTransactionResponse>> GetById(string depositTransactionId, DetailsLevel? detailsLevel)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 

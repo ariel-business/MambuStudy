@@ -1,5 +1,6 @@
 ﻿using MambuStudy.Application.Interfaces;
 using MambuStudy.Application.ViewModel.Request;
+using MambuStudy.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MambuStudy.Api.Controllers
@@ -15,7 +16,7 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll([FromQuery] int? limit, [FromQuery] int? offset, [FromQuery] string? detailsLevel = "BASIC")
+        public async Task<ActionResult> GetAll([FromQuery] int? limit, [FromQuery] int? offset, [FromQuery] DetailsLevel? detailsLevel = DetailsLevel.BASIC)
         {
             var result = await _groupService.GetAll(limit, offset, detailsLevel);
 
@@ -37,7 +38,7 @@ namespace MambuStudy.Api.Controllers
         }
 
         [HttpGet("{groupId}")]
-        public async Task<ActionResult> GetById([FromRoute] string groupId, [FromQuery] string? detailsLevel = "BASIC")
+        public async Task<ActionResult> GetById([FromRoute] string groupId, [FromQuery] DetailsLevel? detailsLevel = DetailsLevel.BASIC)
         {
             var result = await _groupService.GetById(groupId, detailsLevel);
 

@@ -2,6 +2,7 @@
 using MambuStudy.Application.Interfaces;
 using MambuStudy.Application.ViewModel.Request;
 using MambuStudy.Application.ViewModel.Response;
+using MambuStudy.Domain.Enums;
 using MambuStudy.Domain.Models;
 
 namespace MambuStudy.Application.Services
@@ -15,7 +16,7 @@ namespace MambuStudy.Application.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<ApiResult<List<DepositAccountResponse>>> GetAll(int? limit, int? offset, string? detailsLevel)
+        public async Task<ApiResult<List<DepositAccountResponse>>> GetAll(int? limit, int? offset, DetailsLevel? detailsLevel)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 
@@ -37,7 +38,7 @@ namespace MambuStudy.Application.Services
             return result;
         }
 
-        public async Task<ApiResult<DepositAccountResponse>> GetById(string depositAccountId, string? detailsLevel)
+        public async Task<ApiResult<DepositAccountResponse>> GetById(string depositAccountId, DetailsLevel? detailsLevel)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 
@@ -70,7 +71,7 @@ namespace MambuStudy.Application.Services
             return result;
         }
 
-        public async Task<ApiResult<List<DepositTransactionResponse>>> GetAllTransactions(string depositAccountId, int? limit, int? offset, string? detailsLevel)
+        public async Task<ApiResult<List<DepositTransactionResponse>>> GetAllTransactions(string depositAccountId, int? limit, int? offset, DetailsLevel? detailsLevel)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 
