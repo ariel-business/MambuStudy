@@ -14,5 +14,7 @@ namespace MambuStudy.Application.Interfaces
         Task<ApiResult<DepositAccountResponse>> ChangeDepositAccountState(string depositAccountId, ChangeDepositAccountStateRequest changeDepositAccountStateRequest);
         Task<ApiResult<List<DepositTransactionResponse>>> GetAllTransactions(string depositAccountId, int? limit, int? offset, DetailsLevel? detailsLevel);
         Task<ApiResult<DepositTransactionResponse>> MakeDeposit(string depositAccountId, MakeDepositTransactionRequest makeDepositTransactionRequest);
+        Task<ApiResult<DepositAccountResponse>> StartDepositAccountMaturity(string depositAccountId, StartDepositAccountMaturityRequest startDepositAccountMaturityRequest);
+        Task<ApiResult<object>> UndoDepositAccountMaturity(string depositAccountId, UndoDepositAccountMaturityRequest? undoDepositAccountMaturityRequest);
     }
 }

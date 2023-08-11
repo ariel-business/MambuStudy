@@ -10,5 +10,9 @@
         public string ProductTypeKey { get; set; }
         public string? AccountState { get; set; }
         public string? AccountType { get; set; }
+        public string? CreationDate { get; set; }
+        public string? ApprovedDate { get; set; }
+        public string? ActivationDate { get; set; }
+        public string? MaturityDate { get; set; }
     }
 }

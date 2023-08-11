@@ -38,17 +38,6 @@ namespace MambuStudy.Api.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("{depositAccountId}:changeState")]
-        public async Task<ActionResult> ChangeDepositAccountState([FromRoute] string depositAccountId, [FromBody] ChangeDepositAccountStateRequest changeDepositAccountStateRequest)
-        {
-            var result = await _depositAccountService.ChangeDepositAccountState(depositAccountId, changeDepositAccountStateRequest);
-
-            if (result.IsSuccess)
-                return Ok(result);
-
-            return BadRequest(result);
-        }
-
         [HttpGet("{depositAccountId}")]
         public async Task<ActionResult> GetById([FromRoute] string depositAccountId, [FromQuery] DetailsLevel? detailsLevel = DetailsLevel.BASIC)
         {
@@ -86,6 +75,39 @@ namespace MambuStudy.Api.Controllers
         public async Task<ActionResult> MakeDeposit([FromRoute] string depositAccountId, [FromBody] MakeDepositTransactionRequest makeDepositTransactionRequest)
         {
             var result = await _depositAccountService.MakeDeposit(depositAccountId, makeDepositTransactionRequest);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+        [HttpPost("{depositAccountId}:changeState")]
+        public async Task<ActionResult> ChangeDepositAccountState([FromRoute] string depositAccountId, [FromBody] ChangeDepositAccountStateRequest changeDepositAccountStateRequest)
+        {
+            var result = await _depositAccountService.ChangeDepositAccountState(depositAccountId, changeDepositAccountStateRequest);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+        [HttpPost("{depositAccountId}:startMaturity")]
+        public async Task<ActionResult>StartDepositAccountMaturity([FromRoute] string depositAccountId, [FromBody] StartDepositAccountMaturityRequest startDepositAccountMaturityRequest)
+        {
+            var result = await _depositAccountService.StartDepositAccountMaturity(depositAccountId, startDepositAccountMaturityRequest);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+        [HttpPost("{depositAccountId}:undoMaturity")]
+        public async Task<ActionResult> UndotDepositAccountMaturity([FromRoute] string depositAccountId, [FromBody] UndoDepositAccountMaturityRequest? undoDepositAccountMaturityRequest)
+        {
+            var result = await _depositAccountService.UndoDepositAccountMaturity(depositAccountId, undoDepositAccountMaturityRequest);
 
             if (result.IsSuccess)
                 return Ok(result);

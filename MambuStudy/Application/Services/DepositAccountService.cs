@@ -92,5 +92,27 @@ namespace MambuStudy.Application.Services
 
             return result;
         }
+
+        public async Task<ApiResult<DepositAccountResponse>> StartDepositAccountMaturity(string depositAccountId, StartDepositAccountMaturityRequest startDepositAccountMaturityRequest)
+        {
+            HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
+
+            HttpResponseMessage httpResponseMessage = await httpClient.PostAsJsonAsync($"deposits/{depositAccountId}:startMaturity", startDepositAccountMaturityRequest);
+
+            var result = httpResponseMessage.GetApiResult<DepositAccountResponse>();
+
+            return result;
+        }
+
+        public async Task<ApiResult<object>> UndoDepositAccountMaturity(string depositAccountId, UndoDepositAccountMaturityRequest? undoDepositAccountMaturityRequest)
+        {
+            HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
+
+            HttpResponseMessage httpResponseMessage = await httpClient.PostAsJsonAsync($"deposits/{depositAccountId}:undoMaturity", undoDepositAccountMaturityRequest);
+
+            var result = httpResponseMessage.GetApiResult<object>();
+
+            return result;
+        }
     }
 }
