@@ -4,6 +4,7 @@ using MambuStudy.Application.ViewModel.Request;
 using MambuStudy.Application.ViewModel.Response;
 using MambuStudy.Domain.Enums;
 using MambuStudy.Domain.Models;
+using System.Text.RegularExpressions;
 
 namespace MambuStudy.Application.Services
 {
@@ -18,6 +19,8 @@ namespace MambuStudy.Application.Services
 
         public async Task<ApiResult<List<ClientResponse>>> GetAll(int? limit, int? offset, DetailsLevel? detailsLevel) 
         {
+            Regex emailregex = new Regex("(?<user>[^@]+)@(?<host>.+)");
+
             HttpClient httpClient = _httpClientFactory.CreateClient("mambuApi");
 
             HttpResponseMessage httpResponseMessage = await httpClient.GetAsync($"clients?limit={limit}&offset={offset}&detailsLevel={detailsLevel}");
