@@ -24,6 +24,11 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+       repository: ${{github.repository}}
+       ref: ${{ env.BRANCH_NAME }}
     - name: CodeQL Scanning
       uses: ./.github/workflows/codeql.yml
 #    - name: Test
