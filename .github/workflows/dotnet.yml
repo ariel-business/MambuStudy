@@ -25,6 +25,6 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: CodeQL
-      uses: MambuStudy/codeql
+      uses: MambuStudy/codeql@v1
 #    - name: Test
 #      run: dotnet test --no-build --verbosity normal
